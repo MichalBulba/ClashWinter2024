@@ -17,6 +17,8 @@ data class Point(
     fun vector(p2: Point) = Point(p2.x - this.x, p2.y - this.y)
 
     fun distance() = sqrt((x * x + y * y).toDouble())
+
+    fun moveLeft(left: Int) = Point(x - left, y)
 }
 
 enum class Type {

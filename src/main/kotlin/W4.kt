@@ -5,6 +5,7 @@ import kotlin.math.sqrt
 
 /**
  * Grow and multiply your organisms to end up larger than your opponent.
+ * Can collect proteins and grow
  **/
 fun main(args : Array<String>) {
     val input = Scanner(System.`in`)

@@ -5,6 +5,7 @@ import kotlin.math.sqrt
 
 /**
  * Grow and multiply your organisms to end up larger than your opponent.
+ * Can use harvester to get proteins
  **/
 fun main(args : Array<String>) {
     val input = Scanner(System.`in`)
@@ -57,18 +58,18 @@ fun main(args : Array<String>) {
             val mostRight = basics.filter { it.type == BASIC }.sortedByDescending { it.pos.x }.firstOrNull()
 
             val from = mostRight ?: root
-            //for now look at proteins closes to root
             val proteins = fields.filter { it.type == PROTEIN_A }.sortedBy { root.pos.vector(it.pos).distance() }
 
             val target = proteins.first()
             var premove = false
+            val adjust = if(target.pos.y == root.pos.y) 1 else 0
             when(basics.size) {
                 0 -> {
-                    println("GROW ${from.organId} ${root.pos.x} ${target.pos.y} BASIC $from")
+                    println("GROW ${from.organId} ${root.pos.x+adjust} ${target.pos.y} BASIC $from")
                     premove = true
                 }
                 1 -> {
-                    println("GROW ${from.organId} ${root.pos.x+1} ${target.pos.y} BASIC $from")
+                    println("GROW ${from.organId} ${root.pos.x+1+adjust} ${target.pos.y} BASIC $from")
                     premove = true
                 }
             }
@@ -87,9 +88,9 @@ fun main(args : Array<String>) {
                     val oneLeft = target.pos.moveLeft(2)
                     if(basics.any { it.pos == oneLeft }) {
                         when(nextStep.y) {
-                            1 -> println("GROW ${from.organId} ${nextStep.x} ${nextStep.y} HARVESTER E $from")
-                            2 -> println("GROW ${from.organId} ${nextStep.x} ${nextStep.y} HARVESTER E $from")
-                            3 -> println("GROW ${from.organId} ${nextStep.x} ${nextStep.y} HARVESTER E $from")
+                            1 -> println("GROW ${from.organId} ${nextStep.x-1} ${nextStep.y} HARVESTER E $from")
+                            2 -> println("GROW ${from.organId} ${nextStep.x-1} ${nextStep.y} HARVESTER E $from")
+                            3 -> println("GROW ${from.organId} ${nextStep.x-1} ${nextStep.y} HARVESTER E $from")
                         }
                     } else {
                         println("GROW ${from.organId} ${nextStep.x} ${nextStep.y} BASIC $from")
@@ -104,7 +105,7 @@ fun main(args : Array<String>) {
                     if(basics.any { it.pos == next }) {
                         println("GROW 1 6 6 BASIC $from")
                     } else {
-                        println("GROW ${from.organId} ${next.x} ${next.y} BASIC $from")
+                        println("GROW 1 ${next.x} ${next.y} BASIC $from")
                     }
                 }
             }
